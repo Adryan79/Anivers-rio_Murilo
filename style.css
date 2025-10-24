@@ -25,7 +25,7 @@
 /* ===== FUNDO BORRADO (NOVO) ===== */
 body {
     /* Esta imagem será usada para o fundo borrado */
-    background-image: url(''); 
+    background-image: url('unnamed.jpg'); 
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -48,10 +48,13 @@ body::before {
     transform: scale(1.05); /* Evita bordas brancas do blur */
 }
 
-/* REGRA CORRIGIDA */
+/* * ======================================================
+ * ===== CORREÇÃO APLICADA AQUI =====
+ * ======================================================
+ */
 .festa-container {
     /* Define a largura máxima do convite */
-    max-width: 500px; /* <--- Esta é a correção principal! */
+    max-width: 500px; 
     
     /* Centraliza o convite na tela */
     margin-left: auto;
@@ -69,14 +72,18 @@ body::before {
 
     position: relative; /* IMPORTANTE: Mantém como referência para os itens */
     
-    /* ===== MUDANÇA #1: FUNDO VERDE DESFOCADO ===== */
-    /* Combina o gradiente (atrás) com o mapa (na frente) */
-    /* Isso substitui o "verde forte" por um gradiente que dá a sensação de desfoque */
-    background-image: url('unnamed.jpg'), radial-gradient(circle, #2a753a 40%, #1A522A 80%);
-    background-size: contain, cover; /* 'contain' para o mapa, 'cover' para o gradiente */
-    background-position: center, center;
-    background-repeat: no-repeat, no-repeat;
-    /* A cor sólida antiga foi removida (estava como background-color) */
+    /* ===== MUDANÇA #1: FUNDO APENAS COM A IMAGEM ===== */
+    /* Define APENAS a imagem 'unnamed.jpg' como fundo */
+    background-image: url('unnamed.jpg');
+    
+    /* Faz a imagem COBRIR todo o container, sem distorcer */
+    background-size: cover; 
+    
+    /* Centraliza a imagem */
+    background-position: center;
+    
+    /* Evita repetição */
+    background-repeat: no-repeat;
     
     /* Borda e Sombra para destacar do fundo borrado */
     border: 3px solid var(--cor-dourada-escura);
@@ -86,6 +93,12 @@ body::before {
     /* Garante que o conteúdo (como o menino) não 'vaze' */
     overflow: hidden; 
 }
+/* ======================================================
+ * ===== FIM DA CORREÇÃO =====
+ * ======================================================
+ */
+
+
 /* DELETAR ESTE BLOCO INTEIRO */
 .festa-container::before {
     content: '';
@@ -577,10 +590,10 @@ body::before {
 
 #mala {
     bottom: 20vh;
-    right: 40%;
+    right: 38%;
     height: 20%;
-    width: 22%;
-    max-width: 20%;
+    width: 30%;
+    max-width: 50%;
     animation-duration: 4.5s;
     animation-delay: -2s;
 }
