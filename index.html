@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Murilo 6 Anos - Explorador do Mundo</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        /* Estiliza o conteúdo do modal de localização */
+        #modal-localizacao .modal-conteudo {
+            text-align: center; /* Centraliza o título e o botão */
+        }
+        
+        /* Aplica a fonte do tema ao título do modal */
+        #modal-localizacao .modal-titulo {
+            font-family: 'Permanent Marker', cursive;
+            color: #004a99; /* Um azul escuro (cor de "tinta de mapa") */
+            font-size: 1.9rem; /* Um pouco maior */
+            margin-bottom: 25px;
+        }
+        
+        /* Estilos para a lista "didática" de informações */
+        .info-viagem-lista {
+            list-style: none; /* Remove bolinhas da lista */
+            padding: 0;
+            margin: 0 0 25px 0;
+            font-family: Arial, sans-serif; /* Fonte legível para detalhes */
+            font-size: 1.1rem;
+            color: #333;
+            text-align: left; /* Alinha o texto da lista à esquerda */
+        }
+
+        .info-viagem-item {
+            display: flex;
+            align-items: center; /* Alinha ícone e texto */
+            margin-bottom: 15px;
+        }
+        
+        /* Estilo do ícone da lista */
+        .info-viagem-item span {
+            font-size: 1.5rem; /* Tamanho do emoji */
+            margin-right: 15px; /* Espaço entre ícone e texto */
+            width: 30px; /* Largura fixa para alinhar */
+            text-align: center;
+        }
+        
+        .info-viagem-item div {
+            line-height: 1.4;
+        }
+
+        /* Estilo do novo botão do mapa */
+        .botao-mapa {
+            display: inline-block;
+            background-color: #3498db; /* Azul "céu/oceano" */
+            color: white;
+            padding: 12px 28px;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 50px; /* Arredondado (como os botões circulares) */
+            margin-top: 15px;
+            font-weight: bold;
+            font-family: Arial, sans-serif;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .botao-mapa:hover {
+            background-color: #2980b9; /* Azul mais escuro ao passar o mouse */
+        }
+        
+        /* Estilo para o nome do Murilo dentro do modal */
+         .info-viagem-nome {
+            font-family: Arial, sans-serif;
+            font-weight: bold;
+            color: #555;
+            text-align: center;
+            margin-top: 20px;
+         }
+
+        /* ==== ESTILO DO NOVO BOTÃO COPIAR PIX ==== */
+        .botao-copiar {
+            background-color: #2ecc71; /* Verde "PIX" */
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 25px;
+            font-family: Arial, sans-serif;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 15px;
+            transition: background-color 0.3s ease;
+        }
+        .botao-copiar:hover {
+            background-color: #27ae60;
+        }
+    </style>
+</head>
+<body>
+<div class="festa-container">
+
+    <img src="planeta.png" alt="Planeta" class="imagem-flutuante" id="planeta">
+    <img src="relogio.png" alt="Relógio" class="imagem-flutuante" id="relogio">
+    <img src="mala.png" alt="Mala" class="imagem-flutuante" id="mala">
+    <img src="passaport.png" alt="Passaporte" class="imagem-flutuante" id="passaport">
+    <div class="aviao aviao-direita"></div>
+    <div class="aviao aviao-esquerda"></div>
+
+    <img src="Untitled-removebg-preview.png" alt="Detalhe de Decoração" class="imagem-inferior-esquerda">
+    
+    <div class="texto-painel">
+        <p class="nome">MURILO 6 Anos</p>
+        <p class="subtitulo">Explorador Do Mundo</p>
+    </div>
+
+    <audio id="musicaFesta" src="The-Big-Bang-Theory-Theme-Song.mp3" loop></audio>
+    <div class="botoes-container">
+        <a href="#modal-localizacao" class="botao-circular botao-localizacao">
+            <span class="icone">📍</span>
+            Localização
+        </a>
+        <a href="https://docs.google.com/forms/d/1Qfl0pLZifLXJxlL5-io5lJPqzNEP1FFvcG2VcRXSRHc/edit" class="botao-circular botao-presenca">
+            <span class="icone">✅</span>
+            Presença
+        </a>
+        <a href="#modal-presentes" class="botao-circular botao-presentes"> <span class="icone">🎁</span>
+            Sugestão de Presentes
+        </a>
+    </div>
+
+</div>
+
+<div id="modal-presentes" class="modal-overlay">
+    <div class="modal-conteudo">
+        <a href="#" class="modal-fechar">×</a>
+        <div class="modal-titulo">💡 Sugestão de Presentes</div>
+        <p class="modal-mensagem">"O Murilo está juntando moedinhas para sua próxima aventura!</p>
+        <p class="modal-mensagem">Caso queira deixar uma na mochilinha dele:</p>
+        
+        <p class="modal-pix">💰 PIX: <span id="chave-pix">(49) 2647-0462 </span></p>
+        
+        <button type="button" id="botao-copiar-pix" class="botao-copiar">Copiar PIX</button>
+        
+    </div>
+</div>
+<div id="modal-localizacao" class="modal-overlay">
+    <div class="modal-conteudo">
+        <a href="#" class="modal-fechar">×</a>
+        
+        <div class="modal-titulo">✈️ Nossa Próxima Parada! ✈️</div>
+        
+        <ul class="info-viagem-lista">
+            <li class="info-viagem-item">
+                <span>🗓️</span>
+                <div>
+                    <strong>Data:</strong> 22 de novembro de 2025
+                </div>
+            </li>
+            <li class="info-viagem-item">
+                <span>⏰</span>
+                <div>
+                    <strong>Horário:</strong> 16h00
+                </div>
+            </li>
+            <li class="info-viagem-item">
+                <span>📍</span>
+                <div>
+                    <strong>Local:</strong> Condomínio Fonte dos Corais s/n<br>
+                    Ponta de Mangue – Maragogi/AL
+                </div>
+            </li>
+        </ul>
+
+        <p class="info-viagem-nome">Murilo – Explorador do Mundo</p>
+        
+        <a href="https://maps.app.goo.gl/YxdRVpNsKnXxVdnE6" target="_blank" class="botao-mapa">
+            Ver Rota no Mapa
+        </a>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+
+        // --- LÓGICA DA MÚSICA AUTOPLAY ---
+        const audio = document.getElementById('musicaFesta');
+        
+        // 1. Tenta tocar a música
+        const promise = audio.play();
+
+        if (promise !== undefined) {
+            promise.catch(error => {
+                // Autoplay foi bloqueado pelo navegador.
+                console.log("Autoplay bloqueado. Esperando primeiro clique do usuário.");
+                
+                // 2. Se falhar, adiciona um "ouvinte" para o PRIMEIRO clique na tela
+                document.body.addEventListener('click', () => {
+                    audio.play();
+                }, { once: true }); // O 'once: true' faz isso acontecer só uma vez
+                
+                // Tenta também no primeiro toque (para celulares)
+                 document.body.addEventListener('touchstart', () => {
+                    audio.play();
+                }, { once: true });
+            });
+        }
+
+        // --- LÓGICA DO BOTÃO COPIAR PIX ---
+        const botaoCopiar = document.getElementById('botao-copiar-pix');
+        const textoPix = document.getElementById('chave-pix').innerText; // Pega o texto da chave
+
+        botaoCopiar.addEventListener('click', () => {
+            // Usa a API moderna do navegador para copiar
+            navigator.clipboard.writeText(textoPix).then(() => {
+                // Sucesso!
+                botaoCopiar.innerText = 'Copiado!';
+                botaoCopiar.style.backgroundColor = '#27ae60'; // Verde mais escuro
+
+                // Volta ao normal depois de 2 segundos
+                setTimeout(() => {
+                    botaoCopiar.innerText = 'Copiar PIX';
+                    botaoCopiar.style.backgroundColor = '#2ecc71'; // Verde original
+                }, 2000);
+
+            }).catch(err => {
+                // Erro (raro, mas pode acontecer)
+                console.error('Falha ao copiar: ', err);
+                alert("Não foi possível copiar. Por favor, copie manualmente.");
+            });
+        });
+
+    });
+</script>
+
+</body>
+</html>

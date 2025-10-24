@@ -1,0 +1,641 @@
+/* ===== VARIÁVEIS DE CORES ===== */
+:root {
+    --cor-dourada-escura: #48ff00;
+    --cor-dourada-clara: #ffffff;
+    --cor-dourada-brilho: #FFFFAA;
+    --cor-fundo-verde: #1A522A; /* Mantido para referência, mas não usado no container */
+    --cor-borda-verde: #4CAF50;
+    --cor-botao-fundo: linear-gradient(135deg, #C69F40, #FCE08F);
+    --cor-botao-hover: #7CB342;
+    --cor-botao-borda: #4CAF50;
+    --cor-texto-botao: #837575;
+    --cor-icone-sombra: rgba(0,0,0,0.5);
+    /* Define o tamanho base para o REM. Por padrão é 16px. */
+    /* Para controle global, pode-se ajustar o font-size do elemento HTML */
+}
+
+/* ===== RESET ===== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* REGRA CORRIGIDA */
+/* ===== FUNDO BORRADO (NOVO) ===== */
+body {
+    /* Esta imagem será usada para o fundo borrado */
+    background-image: url(''); 
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    /* 'fixed' garante que o fundo não role com a página */
+    background-attachment: fixed; 
+    position: relative; /* Necessário para o z-index do ::before */
+}
+
+body::before {
+    content: '';
+    position: fixed; /* 'fixed' cobre a tela inteira */
+    top: 0; left: 0; 
+    width: 100%; height: 100%;
+    z-index: -1; /* Fica atrás de todo o conteúdo */
+    background-image: inherit; /* Herda a imagem do 'body' */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    filter: blur(10px);
+    transform: scale(1.05); /* Evita bordas brancas do blur */
+}
+
+/* REGRA CORRIGIDA */
+.festa-container {
+    /* Define a largura máxima do convite */
+    max-width: 500px; /* <--- Esta é a correção principal! */
+    
+    /* Centraliza o convite na tela */
+    margin-left: auto;
+    margin-right: auto;
+    
+    /* Adiciona margem para não colar no topo/fundo */
+    margin-top: 3vh;
+    margin-bottom: 3vh;
+
+    /* Ocupa 100% da largura SOMENTE ATÉ o máximo de 500px */
+    width: 100%; 
+    
+    /* Altura mínima para o conteúdo caber */
+    min-height: 94vh; 
+
+    position: relative; /* IMPORTANTE: Mantém como referência para os itens */
+    
+    /* ===== MUDANÇA #1: FUNDO VERDE DESFOCADO ===== */
+    /* Combina o gradiente (atrás) com o mapa (na frente) */
+    /* Isso substitui o "verde forte" por um gradiente que dá a sensação de desfoque */
+    background-image: url('unnamed.jpg'), radial-gradient(circle, #2a753a 40%, #1A522A 80%);
+    background-size: contain, cover; /* 'contain' para o mapa, 'cover' para o gradiente */
+    background-position: center, center;
+    background-repeat: no-repeat, no-repeat;
+    /* A cor sólida antiga foi removida (estava como background-color) */
+    
+    /* Borda e Sombra para destacar do fundo borrado */
+    border: 3px solid var(--cor-dourada-escura);
+    border-radius: 15px;
+    box-shadow: 0 5px 25px rgba(0,0,0,0.5);
+    
+    /* Garante que o conteúdo (como o menino) não 'vaze' */
+    overflow: hidden; 
+}
+/* DELETAR ESTE BLOCO INTEIRO */
+.festa-container::before {
+    content: '';
+    position: absolute;
+    top:0; left:0; width:100%; height:100%;
+    z-index: -1;
+    background-image: inherit;
+    background-size: cover; 
+    filter: blur(10px);
+    transform: scale(1.05);
+}
+/* FIM DO BLOCO A DELETAR */
+
+/* ===== ANIMAÇÃO DOURADA ===== */
+@keyframes brilho-dourado {
+    0% { background-position: 200% center; }
+    100% { background-position: -200% center; }
+}
+
+/* ===== MUDANÇA #2: NOVA ANIMAÇÃO DINÂMICA ===== */
+@keyframes pulso-dinamico {
+    0% { 
+        transform: scale(1);
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.4);
+    }
+    50% { 
+        transform: scale(1.03); /* Aumento sutil */
+        text-shadow: 3px 3px 8px rgba(0,0,0,0.6); /* Sombra mais forte */
+    }
+    100% { 
+        transform: scale(1);
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.4);
+    }
+}
+
+
+/* REGRA CORRIGIDA */
+.texto-painel {
+    position: absolute;
+    top: 6vh;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 70%;
+    max-width: 600px;
+    text-align: center;
+    pointer-events: none;
+    z-index: 20; /* <-- ALTERADO DE 10 PARA 20 */
+}
+
+/* ===== MUDANÇA #3: TEXTO DINÂMICO APLICADO ===== */
+/* Bloco único para aplicar o estilo e as animações */
+.nome, .subtitulo, .idade-explorador {
+    /* O text-shadow agora é controlado pela animação 'pulso-dinamico' */
+    background: linear-gradient(90deg, var(--cor-dourada-escura) 0%, var(--cor-dourada-clara) 25%, var(--cor-dourada-brilho) 50%, var(--cor-dourada-clara) 75%, var(--cor-dourada-escura) 100%);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    /* Combina a animação de brilho existente com o novo pulso dinâmico */
+    animation: brilho-dourado 4s linear infinite, pulso-dinamico 3s ease-in-out infinite;
+}
+
+
+/* Os tamanhos em REM agora são a ÚNICA fonte de tamanho para o texto, 
+   o que proporciona mais consistência de proporção entre notebook e celular. */
+/* Os tamanhos foram ligeiramente aumentados para serem visíveis no celular, 
+   mas o REM garante que eles não fiquem gigantes. */
+   
+/* ===== MUDANÇA #4: FONTE BONITA APLICADA ===== */
+.nome {
+    font-family:'Times New Roman', Times, serif, cursive; /* <=== FONTE NOVA APLICADA AQUI */
+    font-size: 2rem; 
+    margin-bottom: 1vh; 
+}
+
+.subtitulo { 
+    font-family:'Times New Roman', Times, serif, cursive; /* <=== FONTE NOVA APLICADA AQUI */
+    font-size: 1rem; 
+    letter-spacing: 0.1rem; 
+    margin-bottom: 0.5vh; 
+}
+
+.idade-explorador { 
+    font-family: 'Permanent Marker', cursive; /* <=== FONTE NOVA APLICADA AQUI */
+    font-size: 1.2rem; 
+    letter-spacing: 0.05rem; 
+}
+
+/* ... O restante do código CSS ... */
+
+/* ===== RESPONSIVO PARA TELAS PEQUENAS (REMOVIDO AJUSTES DO TEXTO PRINCIPAL) ===== */
+/* Removemos as media queries que deixavam o texto principal muito grande (e depois muito pequeno).
+   Agora, ele usa o tamanho em REM acima para TODAS as telas. */
+@media (max-width: 768px) {
+    /* Diminui o font-size do elemento raiz para que todos os 'rem' se ajustem
+       em telas menores, mantendo a proporção. */
+    html {
+        font-size: 14px; /* Onde 1rem = 14px (padrão é 16px) */
+    }
+}
+
+/* ===== TEXTO LATERAL (AJUSTADO COM VW/REM) ===== */
+.texto-placa {
+    position: absolute;
+    bottom: 12vh; right: 5vw; /* Ajustado 'right' de 12vw para 5vw */
+    transform: rotate(2deg);
+    width: 25vw; /* Aumentado a largura para melhor visualização em telas pequenas */
+    max-width: 200px; /* Limita o tamanho máximo em telas grandes */
+    text-align: center;
+    pointer-events: none;
+    line-height: 1.1;
+    z-index: 10;
+}
+
+.texto-placa p {
+    font-family: 'Impact', sans-serif;
+    font-size: 1.2rem; /* Alterado de vw para rem para ser mais previsível */
+    font-weight: bold;
+    color: #f0f0f0;
+    margin: 0.5vh 0;
+}
+
+@media (max-width: 768px) {
+    .texto-placa {
+        bottom: 15vh; /* Move um pouco para cima para dar espaço aos botões */
+        right: 2vw;
+        width: 35vw;
+    }
+    .texto-placa p {
+        font-size: 1rem;
+    }
+}
+
+
+/* ===== BOTOES NOVOS AJUSTADOS COM REM ===== */
+.botoes-container {
+        font-family:'Times New Roman', Times, serif; /* <=== FONTE NOVA APLICADA AQUI */
+
+    position: absolute;
+    bottom: 6vh;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    justify-content: center;
+    gap: 1rem; /* Espaçamento entre botões */
+    align-items: flex-end;
+    z-index: 50;
+    padding: 0rem 0;
+}
+
+.botao-circular {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 6.5rem;      /* Ligeiramente reduzido */
+    height: 5rem;     /* Ligeiramente reduzido */
+    border-radius: 1rem;
+    border: 0.2rem solid var(--cor-botao-borda);
+    background: var(--cor-botao-fundo);
+    color: var(--cor-texto-botao);
+    text-decoration: none;
+    font-weight: bold;
+    text-align: center;
+    box-shadow: 0 0.4rem 1rem rgba(115, 255, 0, 0.35), inset 0 0 0.5rem rgba(145, 255, 0, 0.3);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    font-size: 0.9rem; /* <<== TAMANHO DO TEXTO BASE REDUZIDO AQUI */
+    line-height: 1.1;
+    animation: flutuar 3s ease-in-out infinite alternate;
+}
+
+.botao-circular .icone {
+    display: block;
+    font-size: 1rem; /* <<== TAMANHO DO ÍCONE REDUZIDO AQUI */
+    margin-bottom: 0.3rem;
+    text-shadow: 0 0.1rem 0.2rem var(--cor-icone-sombra);
+    transition: transform 0.4s, text-shadow 0.4s;
+}
+
+/* Hover dinâmico (Mantido) */
+.botao-circular:hover {
+    transform: translateY(-0.75rem) rotate(-2deg) scale(1.05);
+    box-shadow: 0 1.5rem 3rem rgba(0,0,0,0.6), 0 0 2rem var(--cor-botao-hover);
+    border-color: var(--cor-botao-hover);
+    background: linear-gradient(135deg, #7CB342, #C69F40);
+}
+
+.botao-circular:hover .icone {
+    transform: scale(1.4) rotate(15deg);
+    text-shadow: 0 0 0.75rem #fff, 0 0 1.25rem var(--cor-dourada-brilho);
+}
+
+/* ===== ANIMAÇÃO FLUTUAR (Mantido) ===== */
+@keyframes flutuar {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-3px); }
+    100% { transform: translateY(0px); }
+}
+
+
+/* ===== RESPONSIVO (AJUSTADO PARA TELAS MUITO PEQUENAS) ===== */
+@media (max-width: 1024px) {
+    /* Manteve ajuste para telas médias */
+    .botao-circular { width: 5rem; height: 5rem; font-size: 0.8rem; } /* Texto ainda menor para notebooks/tablets */
+    .botao-circular .icone { font-size: 1.2rem; }
+    .botoes-container { gap: 1.5rem; }
+}
+
+@media (max-width: 768px) {
+    /* Diminui ainda mais para telas de celular pequenas */
+    .botoes-container { 
+        gap: 0.75rem; /* Espaçamento reduzido no celular */
+        bottom: 5vh; 
+        width: 95%; /* Ocupa mais largura */
+    }
+    .botao-circular { 
+        width: 4.5rem; /* Botões menores */
+        height: 4.5rem; 
+        font-size: 0.75rem; /* <<== TAMANHO MÍNIMO NO CELULAR */
+        border-width: 0.15rem; 
+        box-shadow: 0 0.3rem 0.75rem rgba(0,0,0,0.35), inset 0 0 0.3rem rgba(255,255,255,0.3);
+    }
+    .botao-circular .icone { 
+        font-size: 1.1rem; 
+    }
+}
+
+/* ===== ANIMAÇÃO FLUTUAR (Ajustado o valor de translateY) ===== */
+@keyframes flutuar {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-3px); }
+    100% { transform: translateY(0px); }
+}
+
+
+/* ===== RESPONSIVO (AJUSTADO PARA TELAS MUITO PEQUENAS) ===== */
+@media (max-width: 1024px) {
+    /* Manteve ajuste para telas médias */
+    .botao-circular { width: 5.5rem; height: 5.5rem; font-size: 0.9rem; }
+    .botao-circular .icone { font-size: 1.3rem; }
+    .botoes-container { gap: 1.5rem; }
+}
+
+@media (max-width: 768px) {
+    /* Diminui ainda mais para telas de celular pequenas */
+    .botoes-container { 
+        gap: 1rem; 
+        bottom: 5vh; /* Posição ajustada */
+        width: 90%; /* Ocupa mais largura para não apertar */
+    }
+    .botao-circular { 
+        width: 5rem; 
+        height: 5rem; 
+        font-size: 0.85rem; 
+        border-width: 0.15rem; 
+        box-shadow: 0 0.3rem 0.75rem rgba(0,0,0,0.35), inset 0 0 0.3rem rgba(255,255,255,0.3);
+    }
+    .botao-circular .icone { 
+        font-size: 1.2rem; 
+    }
+}
+
+/* Se necessário, você pode usar uma media query para telas maiores 
+   para aumentar um pouco o tamanho base do REM: */
+@media (min-width: 1360px) {
+    html {
+        font-size: 18px; /* Onde 1rem = 18px (padrão é 16px) */
+    }
+}
+
+/* ===== AVIÕES ANIMADOS (AJUSTADO O FOCO E VELOCIDADE) ===== */
+.aviao {
+    position: absolute;
+    width: 10rem; 
+    height: 60px;
+    background-image: url('AVIAO_MEXENDO.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    z-index: 15;
+}
+
+.aviao-direita {
+    /* Tornando um pouco mais rápido: 10 segundos (era 12s) */
+    animation: voar-direita 5s linear infinite; 
+}
+
+.aviao-esquerda {
+    /* Tornando um pouco mais rápido: 10 segundos (era 12s) */
+    animation: voar-esquerda 5s linear infinite; 
+    transform: scaleX(-1);
+}
+
+@keyframes voar-direita {
+    /* AVIÃO DA DIREITA (Mais Alto) */
+    0% { left: -10%; top: 15%; } /* Posição inicial mais alta (era 20%) */
+    50% { top: 30%; } /* Pico de oscilação mais alto (era 35%) */
+    100% { left: 110%; top: 20%; } /* Posição final mais alta (era 40%) */
+}
+
+@keyframes voar-esquerda {
+    /* AVIÃO DA ESQUERDA (Mais Baixo) */
+    0% { left: 110%; top: 40%; } /* Posição inicial um pouco mais baixa (mantido) */
+    50% { top: 45%; } /* Pico de oscilação mais baixo */
+    100% { left: -10%; top: 50%; } /* Posição final mais baixa (era 40%) */
+}
+
+/* ===== MODAL / POP-UP (SUGESTÃO DE PRESENTES) - CORES AJUSTADAS ===== */
+
+.modal-overlay {
+    /* Mantido o fundo escuro para o efeito de pop-up */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.75); /* Fundo um pouco mais escuro */
+    display: none; 
+    z-index: 100; 
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+}
+
+/* Regra Mágica: Exibe e anima o modal quando a URL tem o hash #modal-presentes */
+.modal-overlay:target {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.modal-conteudo {
+    /* Fundo branco limpo, pode ser ajustado se quiser */
+    background-color: #ffffff;
+    padding: 2.5rem;
+    border-radius: 1rem;
+    max-width: 85%;
+    width: 450px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+    position: relative;
+    text-align: center;
+    transform: scale(0.9);
+    transition: transform 0.3s ease;
+    /* Borda sutil na cor do tema */
+    border: 3px solid var(--cor-dourada-escura);
+}
+
+.modal-overlay:target .modal-conteudo {
+    transform: scale(1); 
+}
+
+.modal-fechar {
+    position: absolute;
+    top: 0.5rem;
+    right: 1.5rem;
+    font-size: 2rem;
+    font-weight: bold;
+    color: var(--cor-fundo-verde); /* Cor do tema para o fechar */
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.modal-fechar:hover {
+    color: #ff0000;
+}
+
+.modal-titulo {
+    font-family: 'Times New Roman', Times, serif; 
+    font-size: 1.5rem;
+    color: var(--cor-fundo-verde); /* Cor do tema */
+    margin-bottom: 1.5rem;
+    /* Linha tracejada na cor do tema dourada */
+    border-bottom: 2px dashed var(--cor-dourada-escura);
+    padding-bottom: 0.5rem;
+}
+
+.modal-mensagem {
+    font-family: Arial, sans-serif;
+    font-size: 1.1rem;
+    color: #444; 
+    line-height: 1.4;
+}
+
+.modal-pix {
+    font-family: 'Arial Black', sans-serif;
+    font-size: 1.5rem;
+    color: var(--cor-fundo-verde); /* Texto PIX na cor verde escura */
+    margin: 1rem 0 0.5rem 0;
+    padding: 0.7rem;
+    /* Borda e fundo com cores claras do tema */
+    border: 3px solid var(--cor-dourada-escura);
+    border-radius: 0.5rem;
+    background: var(--cor-dourada-clara); /* Fundo claro dourado */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.modal-observacao {
+    font-size: 0.75rem;
+    color: #888;
+    margin-top: 0.5rem;
+}
+
+/* FIM DO MODAL */
+
+/* ===== NOVA IMAGEM INFERIOR ESQUERDA ===== */
+.imagem-inferior-esquerda {
+    position: absolute;
+    bottom: 0rem; /* Distância da parte inferior da tela */
+    left: -1rem; /* Distância da parte esquerda da tela */
+    width: 30vw; /* Largura baseada na largura da viewport (aproximadamente 20% da tela) */
+    max-width: 120px; /* Limita o tamanho máximo em telas muito grandes */
+    height: auto; /* Mantém a proporção da imagem */
+    z-index: auto; /* Garante que fique acima de outros elementos se necessário */
+    transform: rotate(-5deg); /* Um leve giro para um toque divertido */
+}
+
+/* Ajustes responsivos para telas menores (celulares) */
+@media (max-width: 768px) {
+    .imagem-inferior-esquerda {
+        bottom: 0vh; /* Move um pouco para cima para não ser coberta pelos botões */
+        left: -1vw;
+        width: 30vw; /* Aumenta um pouco em telas pequenas para ser mais visível */
+        max-width: 120px; /* Ajusta o máximo para o celular */
+    }
+}
+
+
+/* ======================================= */
+/* ===== IMAGENS FLUTUANTES (NOVO) ===== */
+/* ======================================= */
+
+/* Nova animação de flutuação para os itens */
+@keyframes flutuar-item {
+    0% {
+        /* Adiciona um leve giro à flutuação */
+        transform: translateY(0px) rotate(-3deg);
+    }
+    50% {
+        /* Sobe um pouco mais que os botões (12px) e gira para o outro lado */
+        transform: translateY(-12px) rotate(3deg);
+    }
+    100% {
+        transform: translateY(0px) rotate(-3deg);
+    }
+}
+
+/* Estilo comum para todas as imagens flutuantes */
+.imagem-flutuante {
+    padding: 0.3rem;
+    position: absolute;
+    height: auto;
+    /* z-index: 5; 
+      Fica acima do fundo (-1), mas abaixo do texto (10) 
+      e dos aviões (15) e botões (50).
+    */
+    z-index: 5;
+    opacity: 0.9; /* Leve transparência para misturar com o fundo */
+    
+    /* Aplica a animação */
+    animation-name: flutuar-item;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
+/* Posições e tamanhos individuais */
+/* Usamos 'vh' (altura da tela) e 'vw' (largura da tela) para posicionar */
+
+#planeta {
+    top: 32vh;
+    left: 36%;
+    width: 9rem;
+    height: 6rem;
+    max-width: 10rem;
+    animation: flutuar-item 5s ease-in-out infinite alternate,
+               girar-horario 12s linear infinite;
+}
+
+#relogio {
+    bottom: 30vh;
+    right: 20%;
+    height: 20%;
+    width: 20%;
+    max-width: 20%;
+    animation-duration: 4.2s;
+    animation-delay: -1s; /* Começa em um ponto diferente da animação */
+}
+
+#mala {
+    bottom: 20vh;
+    right: 40%;
+    height: 20%;
+    width: 22%;
+    max-width: 20%;
+    animation-duration: 4.5s;
+    animation-delay: -2s;
+}
+
+#passaport {
+    bottom: 30vh;
+    right: 60%;
+    height: 20%;
+    width: 25%;
+    max-width: 25%;
+    animation-duration: 5.3s;
+    animation-delay: -0.5s;
+}
+
+#EUA {
+    top: 13vh;
+    left: 9%;
+    height: 13%;
+    width: 20%;
+    max-width: 20%;
+    animation-duration: 5.3s;
+    animation-delay: -0.5s;
+}
+
+#JAPÃO {
+      top: 26vh;
+    left: 19%;
+    height: 15%;
+    width: 25%;
+    max-width: 100%;
+    animation-duration: 5.3s;
+    animation-delay: -0.5s;
+}
+
+#BRASIL {
+      top: 13vh;
+    right: 9%;
+    height: 13%;
+    width: 20%;
+    max-width: 20%;
+    animation-duration: 5.3s;
+    animation-delay: -0.5s;
+}
+
+#ESPANHA {
+   top: 26vh;
+    right: 15%;
+    height: 20%;
+    width: 20%;
+    max-width: 100%;
+    animation-duration: 5.3s;
+    animation-delay: -0.5s;
+}
+
+@keyframes girar-horario {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
