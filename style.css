@@ -1,6 +1,6 @@
 /* ===== VARIÁVEIS DE CORES ===== */
 :root {
-    --cor-dourada-escura: #48ff00;
+   --cor-dourada-escura: #48ff00;
     --cor-dourada-clara: #ffffff;
     --cor-dourada-brilho: #FFFFAA;
     --cor-fundo-verde: #1A522A; /* Mantido para referência, mas não usado no container */
@@ -652,3 +652,4 @@ body::before {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
 }
+
